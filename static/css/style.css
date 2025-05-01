@@ -33,3 +33,27 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+nav {
+    background-color: #007bff;
+    padding: 10px;
+}
+nav a, a {
+    color: rgb(233, 229, 229);
+    margin-right: 15px;
+    text-decoration: none;
+}
+nav a:hover {
+    color: white;
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+ul li a {
+    margin-left: 10px;
+    color: #007bff;
+}

@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block title %}Task Dashboard{% endblock %}
+{% block content %}
+<h2>Your Tasks</h2>
+{% if tasks %}
+    <ul>
+        {% for task in tasks %}
+        <li>
+            {{ task.title }} ( {{task.status}} - Due {{task.deadline}} )
+            <a href="{% url 'task-update' task.pk %}">Edit</a>
+            <a href="{% url 'task-delete' task.pk %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No new tasks yet. <a href="{% url 'task-create' %}">Create One</a></p>
+{% endif %}
+{% endblock %}
