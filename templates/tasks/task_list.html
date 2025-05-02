@@ -2,17 +2,45 @@
 {% block title %}Task Dashboard{% endblock %}
 {% block content %}
 <h2>Your Tasks</h2>
+<div class="filter-container">
+    <form method="get" class="filter-form">
+        <label for="status">Filter by Status:</label>
+        <select name="status" id="status">
+            <option value="">All</option>
+            {% for status_value, status_label in status_choice %}
+            <option value="{{ status_value }}" {% if current_status == status_value %}selected{% endif %}>
+                {{ status_label }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="deadline">Filter by Deadline:</label>
+        <select name="deadline" id="deadline">
+            <option value="">All</option>
+            {% for deadline_value, deadline_label in deadline_choice %}
+            <option value="{{ deadline_value }}" {% if current_deadline == deadline_value %}selected{% endif %}>
+                {{ deadline_label }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <!-- Apply Filter Button -->
+        <button type="submit">Apply Filter</button>
+    </form>
+</div>
+
+
 {% if tasks %}
-    <ul>
-        {% for task in tasks %}
-        <li>
-            {{ task.title }} ( {{task.status}} - Due {{task.deadline}} )
-            <a href="{% url 'task-update' task.pk %}">Edit</a>
-            <a href="{% url 'task-delete' task.pk %}">Delete</a>
-        </li>
-        {% endfor %}
-    </ul>
+<ul>
+    {% for task in tasks %}
+    <li>
+        {{ task.title }} ( {{task.status}} - Due {{task.deadline}} )
+        <a href="{% url 'task-update' task.pk %}">Edit</a>
+        <a href="{% url 'task-delete' task.pk %}">Delete</a>
+    </li>
+    {% endfor %}
+</ul>
 {% else %}
-    <p>No new tasks yet. <a href="{% url 'task-create' %}">Create One</a></p>
+<p>No new tasks yet. <a href="{% url 'task-create' %}">Create One</a></p>
 {% endif %}
 {% endblock %}
