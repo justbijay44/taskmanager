@@ -17,5 +17,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
+    path('debug/', include('debug_toolbar.urls')),
+
     path('', task_list, name='task-list'),  # Root URL also points to home
 ]

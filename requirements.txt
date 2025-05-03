@@ -2,3 +2,4 @@ Django==5.2
 psycopg2-binary==2.9.10
 djangorestframework
 djangorestframework-simplejwt
+django-debug-toolbar

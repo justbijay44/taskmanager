@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.core.mail import send_mail
+from django.conf import settings
+from django.dispatch import receiver
 
 class Task(models.Model):
 
@@ -19,3 +23,16 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+
+@receiver(post_save, sender=Task)
+def send_task_notification(sender, instance, created, **kwargs):
+    if created and instance.assignee.email:
+        subject= f'New Assigned Task: {instance.title}'
+        message= f'Hi {instance.assignee.username}, You have been assigned a new task : {instance.title}'
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [instance.assignee.email],
+            fail_silently=False,
+        )

@@ -6,6 +6,7 @@ from datetime import timedelta
 from .models import *
 from .forms import *
 
+@login_required
 def task_list(request):
     status = request.GET.get('status', '')
     deadline_filter = request.GET.get('deadline', '')
@@ -47,10 +48,9 @@ def task_create(request):
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save(commit=False)
-            task.assignee =request.user
+            # task.assignee =request.user
             task.save()
-            return redirect('task-list')
-    
+            return redirect('task-list')  
     else:
         form = TaskForm()
     return render(request, 'tasks/task_form.html', {'form': form})
